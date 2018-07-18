@@ -1,0 +1,203 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: rgb(20,20,20) !important;
+}
+
+#banner {
+	width: calc(100% - 20px);
+	background-color: red;
+	height: calc(10% - 20px);
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+
+.content {
+	margin: 15px;
+	width: calc(100% - 30px);
+	display: flex;
+	height: calc(90% - 50px);
+}
+
+.stock {
+	margin: 10px;
+	padding: 5px;
+	width: calc(100% - 30px);
+	min-width: calc(50% - 30px);
+	height: 100%;
+}
+
+.searchPane {
+	margin: 5px;
+	padding: 5px;
+	height: calc(10% - 20px);
+	background-color: rgb(60,60,60);
+	display: flex;
+}
+
+.searchPane input {
+	width: 90%;
+	height: 100%;
+	text-indent: 10px;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.searchButton {
+	width: 10%;
+	height: 100%;
+	margin-left: 5px;
+}
+
+.searchButton button {
+	width: 100%;
+	height: 100%;
+	background-color: blue;
+	color: white;
+	border: 0;
+}
+
+.stockPane, .searchResults {
+	margin: 5px;
+	padding: 5px;
+	max-height: calc(90% - 20px);
+	background-color: rgb(60,60,60);
+	width: calc(100% - 20px);
+}
+
+.searchResults {
+	display: none;
+}
+
+.searchResult {
+	width: calc(100% - 12px);
+	height: calc(10% - 12px);
+	margin: 2px;
+	padding: 4px;
+	background-color: rgb(240,240,240);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;	
+}
+
+.searchResult:hover {
+	cursor: pointer;
+	background-color: rgb(200,200,200);
+}
+
+.searchResult h2, .searchResult h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.searchResult h2 {
+	font-size: 20px;
+	text-indent: 10px;
+}
+.searchResult h3 {
+	font-size: 14px;
+	color: rgb(100,100,100);
+	text-indent: 30px;
+}
+
+.stockHeader, .stockInfo, .stockGraph, .graphInfo {
+	width: 100%;
+	background-color: rgb(240,240,240);
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.stockHeader {
+	height: calc(10% - 4px);
+	margin-top: 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.stockHeader > h2 {
+	margin: 0px;
+}
+
+.stockInfo {
+	height: calc(20% - 8px);
+}
+
+.stockInfo table {
+	height: 100%;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.stockinfo table th {
+	background-color: rgb(20,20,20);
+	color: white;
+	border: 1px solid black;
+	height: 60%;
+}
+
+.stockInfo table td {
+	background-color: rgb(220,220,220);
+	border: 1px solid black;
+	text-align: center;
+	height: 40%;
+}
+
+.graphInfo {
+	height: calc(30% - 4px);
+	margin-bottom: 0px;
+}
+
+.tableHeader {
+	height: 20%;
+	display: flex;
+	background-color: rgb(20,20,20);
+	align-items: center;
+	text-align: center;
+	color: white;
+}
+
+.startHead, .startCell {
+	width: 40%;
+}
+.endHead, .endCell {
+	width: 40%;
+}
+.peakHead, .peakCell {
+	width: 20%;
+}
+.peakCell {
+	font-weight: bold;
+}
+
+.graphTable {
+	height: 80%;
+	overflow: auto;
+	border: 1px solid black;
+}
+
+.row {
+	display: flex;
+	height: 25%;
+}
+
+.row div {
+	outline: 1px solid black;
+	background-color: rgb(220,220,220);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.shadeCell {
+	background-color: rgb(180,180,180) !important;
+}
+
+.negPeak {
+	color: red;
+}
+.posPeak {
+	color: green;
+}
