@@ -1,0 +1,75 @@
+<html>
+	<head>
+		<link href={{ url_for('static', filename="PageStyle.css") }} rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src={{ url_for('static', filename="SearchScript.js") }}></script>
+		<!--Google Charts -->
+		<script src="https://www.gstatic.com/charts/loader.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<h1>Bollinger Bands</h1>
+			<form>
+				<input type="text" id="symbolSearch">
+			</form>
+		</div>
+		<div class="searchContainer">
+			<div class="results">
+			</div>
+		</div>
+		<div class="stockContainer">
+			<div class="stockHeader">
+				<h1 class="stockSymbol">MSFT</h1>
+				<h2 class="stockName">Microsoft Corporation</h2>
+				<h3 class="stockDate"></h3>
+			</div>
+			<div class="stockOverview">
+				<div class="dark cell">
+					<h3>Open</h3>
+				</div>
+				<div class="dark cell">
+					<h3>Close</h3>
+				</div>
+				<div class="dark cell">
+					<h3>High</h3>
+				</div>
+				<div class="dark cell">
+					<h3>Low</h3>
+				</div>
+				<div class="light cell">
+					<h4 class="stockOpen">123</h4>
+				</div>
+				<div class="light cell">
+					<h4 class="stockClose">123</h4>
+				</div>
+				<div class="light cell">
+					<h4 class="stockHigh">123</h4>
+				</div>
+				<div class="light cell">
+					<h4 class="stockLow">123</h4>
+				</div>
+			</div>
+			<div class="graphContainer">
+				<div class="bandsGraph" id="graph1"></div>
+			</div>
+			<div class="graphDetails">
+				<div class="detailsHeader">
+					<div class="cell dark">
+						<h3>Date</h3>
+					</div>
+					<div class="cell dark">
+						<h3>Price</h3>
+					</div>
+					<div class="cell dark">
+						<h3>Band Price</h3>
+					</div>
+					<div class="cell dark">
+						<h3>Difference</h3>
+					</div>
+				</div>
+				<div class="events">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

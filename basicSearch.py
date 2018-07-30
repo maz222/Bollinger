@@ -2,9 +2,11 @@ import os
 import sqlite3
 import requests
 import math
+import json
 
 def searchSymbol(symbol):
 	path = os.path.dirname(os.path.abspath(__file__)) + "/stockDB.db"
+	path = "stockDB.db"
 	dataBase = sqlite3.connect(path)
 	cursor = dataBase.cursor()
 	sql = "select * from stocks where symbol like ?"
@@ -14,7 +16,7 @@ def searchSymbol(symbol):
 		results.append(row)
 	return results
 
-def getData(symbol):
+def getDailyPrices(symbol):
 	API_URL = "https://www.alphavantage.co/query"
 	key = "YD2JUIE8EPP3MQNB"
 	data = {
@@ -23,79 +25,75 @@ def getData(symbol):
 		"outputsize": "full",
 		"datatype": "json",
 		"apikey": key,
-		}
+	}
 	response = requests.get(API_URL, data)
 	stockData = response.json()
 	if len(stockData) == 1:
 		return []
 	return(stockData["Time Series (Daily)"])
 
-def getPrices(symbol, periodLength=None):
-	data = getData(symbol)
-	if len(data) == 1:
+def getDailyBands(symbol, timePeriod):
+	API_URL = "https://www.alphavantage.co/query"
+	key = "YD2JUIE8EPP3MQNB"
+	data = {
+		"function": "BBANDS",
+		"interval": "daily",
+		"symbol": symbol,
+		"time_period": timePeriod,
+		"series_type": "close",
+		"datatype": "json",
+		"apikey": key,
+	}
+	response = requests.get(API_URL, data)
+	stockData = response.json()
+	if len(stockData) == 1:
 		return []
-	prices = []
-	dates = list(data.keys())
-	if periodLength == None:
-		periodLength = len(dates)
-	for i in range(periodLength):
-		prices.append(float(data[dates[i]]["4. close"]))
-	return prices
+	return(stockData["Technical Analysis: BBANDS"])
 
-def getSMA(prices,periodLength):
-	tempSum = 0
-	avgs = []
-	for i in range(len(prices)):
-		tempSum += prices[i]
-		if i == periodLength - 1:
-			avgs.append(round(tempSum / periodLength, 2))
-		elif i >= periodLength:
-			tempSum -= prices[i - periodLength]
-			avgs.append(round(tempSum / periodLength, 2))
-	return avgs
+def getBandPointsOfInterest(prices, bands, totalLength):
+	POI = []
+	for i in range(totalLength):
+		d = list(prices.keys())[i]
+		close = round(float(prices[d]["4. close"]),2)
+		high = round(float(bands[d]["Real Upper Band"]),2)
+		low = round(float(bands[d]["Real Lower Band"]),2)
+		#print([close, high, low])
+		if close > high:
+			POI.append([d, close, high, close - high, (close / high - 1) * 100])
+		elif close < low:
+			POI.append([d, close, low, close - low, (close / low - 1) * 100])
+	return POI
 
-def getStdDev(prices):
-	avg = 0
-	for p in prices:
-		avg += p
-	avg = round(avg / len(prices), 2)
-	temp = []
-	for p in prices:
-		temp.append(round((p - avg) ** 2, 2))
-	avg = 0
-	for p in temp:
-		avg += p
-	avg = round(avg / len(temp),2)
-	return math.sqrt(avg)
-
-def getBands(prices, periodLength, numStdDev=2):
-	middle = getSMA(prices, periodLength)
-	stdDev = getStdDev(middle)
-	top = []
-	bottom = []
-	for p in middle:
-		top.append(round(p + stdDev * numStdDev, 2))
-		bottom.append(round(p - stdDev * numStdDev, 2))
-	return {"upper":top, "middle":middle, "lower":bottom}
-
-
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
  
 @app.route("/")
 def index():
-	prices = getPrices("MS")
-	#print(prices)
-	bands = getBands(prices,5)
-	#print(bands) 
-	return str(bands)
+	#prices = getPrices("MS")
+	#bands = getBands(prices,5)
+	#return str(bands)
+	return render_template("/index.html")
 
-@app.route("/<string:symbol>")
+@app.route("/symbol/<string:symbol>", methods=['GET', 'POST'])
 def search(symbol):
-	prices = getPrices(symbol)
-	bands = getBands(prices,5)
-	return str(bands)
+	prices = getDailyPrices(symbol)
+	bands = getDailyBands(symbol,2)
+	numBands = 100
+	POI = getBandPointsOfInterest(prices, bands, numBands)
+	temp = {"prices":prices,"bands":bands,"pointsOfInterest":POI}
+	return json.dumps(temp)
+
+
+@app.route("/search/<string:symbol>", methods=['GET', 'POST'])
+def searchSymbols(symbol):
+	results = searchSymbol(symbol)
+	if len(results) == 0:
+		return json.dumps({"results":[]})
+	else:
+		temp = {"symbolResults":[]}
+		for r in results:
+			temp["symbolResults"].append((r[0],r[1]))
+		return json.dumps(temp)
 
 if __name__ == "__main__":
-    app.run()
-
+    app.run(debug=True)

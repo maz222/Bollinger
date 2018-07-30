@@ -1,0 +1,182 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: rgb(20,20,20);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.header {
+	width: 100%;
+	background-color: #E18A31;
+	color: white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: calc(30% - 20px);
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.header h1 {
+	font-size: 64px;
+}
+
+.header form {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+#symbolSearch {
+	padding: 20px;
+	font-size: 24px;
+	text-align: center;
+	width: 25%;
+	border: 0;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+#symbolSearch:focus {
+	outline: 2px solid rgba(0,0,0,.75);
+}
+
+.searchContainer {
+	margin: 20px;
+	width: 80%;
+	height: calc(70% - 40px);
+	display: flex;
+	flex-direction: column;
+}
+
+.results {
+	width: 100%;
+	height: 100%;
+	overflow-y: auto;
+}
+
+.listing {
+	padding: 5px;
+	background-color: rgb(220,220,220);
+	margin: 2px;
+}
+
+.listing:hover {
+	cursor: pointer;;
+	background-color: #3188E1;
+}
+
+.listing:hover h1 {
+	color: white;
+}
+
+.listing:hover h2 {
+	color: rgb(220,220,220);
+}
+
+.listing h1, .listing h2 {
+	margin: 0;
+	padding: 0;
+}
+
+.listing h1 {
+	font-size: 20px;
+	text-indent: 10px;
+}
+
+.listing h2 {
+	font-size: 14px;
+	color: rgb(100,100,100);
+	text-indent: 30px;
+}
+
+#emptyListing {
+	background-color: #E13231;
+	color: white;
+	font-size: 48px;
+	padding: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.stockContainer {
+	height: calc(90% - 20px);
+	width: 80%;
+	margin-top: 10px;
+	display: none;
+}
+
+.stockHeader {
+	width: calc(100% - 20px);
+	border: 1px solid black;
+	height: 10%;
+	background-color: rgb(240,240,240);
+	margin: 0;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.stockHeader h1, .stockHeader h2, .stockHeader h3 {
+	margin: 0;
+}
+
+.stockHeader h2 {
+	text-indent: 30px;
+}
+
+.stockHeader h3 {
+	text-indent: 60px;
+}
+
+.stockOverview {
+	width: 100%;
+	height: 10%;
+	background-color: grey;
+	margin-top: 1px;
+	display: grid;
+	grid-template-columns: 25% 25% 25% 25%;
+	grid-template-rows: 50% 50%;
+}
+
+.cell {
+	border: 1px solid black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.dark {
+	background-color: rgb(40,40,40);
+	color: white;
+}
+
+.light {
+	background-color: rgb(220,220,220);
+}
+
+.graphContainer {
+	height: calc(60% - 4px);
+	background-color: black;
+	margin-top: 4px;
+}
+
+.bandsGraph {
+	height: 100%;
+	width: 100%;
+}
+
+.graphDetails {
+	margin-top: 1px;
+	height: calc(20% - 1px);
+	background-color: grey;
+}
+
+.detailsHeader, .bandPOI {
+	display: grid;
+	grid-template-columns: 40% 15% 15% 30%;
+	height: 10%;
+}
